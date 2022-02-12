@@ -17,6 +17,26 @@ void affiche(struct Matrice m){
     }
 }
 
+struct Matrice matrice(int nbl, int nbc, int *valeurs){
+    int **val = malloc(sizeof(int*)*nbl);
+    for(int i=0; i<nbl; i++){
+        int *t = malloc(sizeof(int)*nbc);
+        for(int j=0; j<nbc; j++){
+            t[j]=valeurs[j+nbl*i];
+            val[i]=t;
+        }
+    }
+    struct Matrice mat;
+    mat.nb_colonnes = nbl;
+    mat.nb_lignes = nbc;
+    mat.valeurs = val;
+    return mat;
+}
+
+void efface(struct Matrice mat){
+    free(mat.valeurs);
+}
+
 int main(){
     int ligne1[3]={1,2,3};
     int ligne2[3]={4,5,6};
@@ -28,4 +48,12 @@ int main(){
         .valeurs = c,
     };
     affiche(mat1);
+    printf("\n");
+    int v1[12] = {
+        1, 2, 3, 4,
+        2, 4, 6, 8,
+        3, 6, 9, 12,
+    };
+    struct Matrice m1 = matrice(3, 4, v1);
+    affiche(m1);
 }
